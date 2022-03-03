@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="note_list">
+        <item>Note 1</item>
+        <item>Note 2</item>
+        <item>Note 3</item>
+        <item>Note 4</item>
+        <item>Note 5</item>
+        <item>Note 6</item>
+    </string-array>
+
+    <string-array name="the_note">
+        <item>Same note text 1</item>
+        <item>Same note text 12</item>
+        <item>Same note text 123</item>
+        <item>Same note text 1234</item>
+        <item>Same note text 12345</item>
+        <item>Same note text 123456</item>
+    </string-array>
+</resources>
