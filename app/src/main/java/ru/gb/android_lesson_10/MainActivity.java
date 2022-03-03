@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ru.gb.android_lesson_10.ui.NoteListFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

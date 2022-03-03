@@ -1,4 +1,4 @@
-package ru.gb.android_lesson_10;
+package ru.gb.android_lesson_10.ui;
 
 import android.os.Bundle;
 
@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import ru.gb.android_lesson_10.R;
+import ru.gb.android_lesson_10.repository.LocalRepositoryImpl;
 
 public class NoteListFragment extends Fragment implements OnItemNoteClickListener {
 
@@ -37,14 +40,14 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
 
     void initAdapter(){
         noteListAdapter = new NoteListAdapter();
-        noteListAdapter.setData(getData());
+        noteListAdapter.setData((new LocalRepositoryImpl(requireContext().getResources())).init());
         noteListAdapter.setOnItemNoteClickListener(this);
     }
 
     void initRecycler(View view){
         RecyclerView recyclerView = view.findViewById(R.id.noteRecyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        //LinearLayoutManager linearLayoutManager =linearLayoutManager ;
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(noteListAdapter);
     }
