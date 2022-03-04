@@ -46,7 +46,6 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
 
     void initRecycler(View view){
         RecyclerView recyclerView = view.findViewById(R.id.noteRecyclerView);
-        //LinearLayoutManager linearLayoutManager =linearLayoutManager ;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(noteListAdapter);

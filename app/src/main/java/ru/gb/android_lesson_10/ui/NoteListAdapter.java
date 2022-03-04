@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +19,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
 
     OnItemNoteClickListener onItemNoteClickListener;
 
-    public void setOnItemNoteClickListener(OnItemNoteClickListener onItemNoteClickListener){
+    public void setOnItemNoteClickListener(OnItemNoteClickListener onItemNoteClickListener) {
         this.onItemNoteClickListener = onItemNoteClickListener;
     }
 
@@ -31,7 +32,8 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         this.noteSource = noteSource;
     }
 
-    public NoteListAdapter() {}
+    public NoteListAdapter() {
+    }
 
     @NonNull
     @Override
@@ -50,17 +52,18 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         return noteSource.size();
     }
 
-    class NoteViewHolder extends RecyclerView.ViewHolder{
+    class NoteViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewTittle;
         private TextView textViewBody;
         private TextView textViewData;
-        private CheckBox checkBox;
+        private ToggleButton toggleButton;
+
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTittle = (TextView) itemView.findViewById(R.id.note_view_item_tittle_text);
             textViewBody = (TextView) itemView.findViewById(R.id.note_view_item_body_note);
             textViewData = (TextView) itemView.findViewById(R.id.note_view_item_date_of_creation);
-            checkBox = (CheckBox) itemView.findViewById(R.id.note_view_item_is_done);
+            toggleButton = (ToggleButton) itemView.findViewById(R.id.note_view_item_is_done);
 //            textView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
@@ -70,7 +73,8 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
 //                }
 //            });
         }
-        public void bindContentWithLayout(Note content){
+
+        public void bindContentWithLayout(Note content) {
 
             textViewTittle.setText(content.getTittleNote());
             textViewBody.setText(content.getBodyNote());

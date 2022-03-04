@@ -7,6 +7,13 @@
         <item>Note 4</item>
         <item>Note 5</item>
         <item>Note 6</item>
+        <item>Note 7</item>
+        <item>Note 8</item>
+        <item>Note 9</item>
+        <item>Note 10</item>
+        <item>Note 11</item>
+        <item>Note 12</item>
+        <item>Note 13</item>
     </string-array>
 
     <string-array name="the_note">
@@ -16,5 +23,12 @@
         <item>Same note text 1234</item>
         <item>Same note text 12345</item>
         <item>Same note text 123456</item>
+        <item>Same note text 1234567</item>
+        <item>Same note text 1234568</item>
+        <item>Same note text 1234569</item>
+        <item>Same note text 12345610</item>
+        <item>Same note text 12345611</item>
+        <item>Same note text 1234561112</item>
+        <item>Same note text 1234561113</item>
     </string-array>
 </resources>

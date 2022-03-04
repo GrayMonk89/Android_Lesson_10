@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:padding="10dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="20dp"
-    app:cardBackgroundColor="@color/purple_200">
+    android:padding="5dp"
+    app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="@color/purple_200"
+    app:cardElevation="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/black_border"
+        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -23,50 +23,60 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tittle: " />
+                android:text="@string/tittle" />
 
             <TextView
                 android:id="@+id/note_view_item_tittle_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tittle text" />
+                android:hint="@string/tittle_text" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Body Note: "/>
+                android:text="@string/body_note" />
+
             <TextView
                 android:id="@+id/note_view_item_body_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Body note"/>
+                android:hint="@string/body_note" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <CheckBox
+
+            <ToggleButton
                 android:id="@+id/note_view_item_is_done"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:text="Done  "/>
+                android:checked="false"
+                android:text=""
+                android:textOff=""
+                android:textOn=""
+                android:background="@drawable/button_is_done"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="  Date of creation:  " />
+                android:text="@string/date_of_creation" />
+
             <TextView
                 android:id="@+id/note_view_item_date_of_creation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:hint="  Date of creation:  "/>
+                android:hint="@string/date_of_creation" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
