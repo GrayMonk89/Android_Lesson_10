@@ -56,7 +56,7 @@ public class NewNoteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
         initView(view);
     }
 

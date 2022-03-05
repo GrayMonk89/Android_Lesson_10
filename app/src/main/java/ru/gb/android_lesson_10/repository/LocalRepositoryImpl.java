@@ -18,7 +18,7 @@ public class LocalRepositoryImpl implements NoteSource {
         this.resources = resources;
     }
 
-    public LocalRepositoryImpl init(){
+    public LocalRepositoryImpl init() {
         String[] tittles = resources.getStringArray(R.array.note_list);
         String[] body = resources.getStringArray(R.array.the_note);
         for (int i = 0; i < tittles.length; i++) {
@@ -40,5 +40,25 @@ public class LocalRepositoryImpl implements NoteSource {
     @Override
     public Note getNoteData(int position) {
         return notesDataSource.get(position);
+    }
+
+    @Override
+    public void clearAllNotes() {
+        notesDataSource.clear();
+    }
+
+    @Override
+    public void addNewNote(Note note) {
+        notesDataSource.add(note);
+    }
+
+    @Override
+    public void deleteNote(int position) {
+        notesDataSource.remove(position);
+    }
+
+    @Override
+    public void updateNote(int position, Note note) {
+        notesDataSource.set(position, note);
     }
 }
