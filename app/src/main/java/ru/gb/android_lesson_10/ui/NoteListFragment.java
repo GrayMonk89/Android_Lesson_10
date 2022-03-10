@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,13 +82,14 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
         int menuPosition = noteListAdapter.getMenuPosition();
         switch (item.getItemId()){
             case (R.id.action_edit_list_item):{
-
-                return true;
+                noteData.updateNote(menuPosition,new Note("Note tittle update " + (noteData.size() + 1), "Note body update" + (noteData.size() + 1), false));
+                noteListAdapter.notifyItemChanged(menuPosition);
+                return false;
             }
             case (R.id.action_delete_list_item):{
                 noteData.deleteNote(menuPosition);
                 noteListAdapter.notifyItemRemoved(menuPosition);
-                return true;
+                return false;
             }
         }
         return super.onContextItemSelected(item);
@@ -105,6 +107,11 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(noteListAdapter);
+
+        DefaultItemAnimator animator = new DefaultItemAnimator();
+        animator.setChangeDuration(2000);
+        animator.setRemoveDuration(2000);
+        recyclerView.setItemAnimator(animator);
     }
 
     private String[] getData() {
