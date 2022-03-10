@@ -4,6 +4,7 @@ package ru.gb.android_lesson_10.repository;
 import android.content.res.Resources;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import ru.gb.android_lesson_10.R;
@@ -22,7 +23,7 @@ public class LocalRepositoryImpl implements NoteSource {
         String[] tittles = resources.getStringArray(R.array.note_list);
         String[] body = resources.getStringArray(R.array.the_note);
         for (int i = 0; i < tittles.length; i++) {
-            notesDataSource.add(new Note(tittles[i], body[i], false));
+            notesDataSource.add(new Note(tittles[i], body[i], Calendar.getInstance().getTime(), false));
         }
         return this;
     }

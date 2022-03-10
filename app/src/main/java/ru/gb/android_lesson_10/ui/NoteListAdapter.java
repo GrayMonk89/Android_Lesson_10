@@ -100,7 +100,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         public void bindContentWithLayout(Note content) {
             textViewTittle.setText(content.getTittleNote());
             textViewBody.setText(content.getBodyNote());
-            textViewData.setText("1.1.1999");
+            textViewData.setText(content.getDateOfCreation().toString());
         }
 
     }

@@ -1,14 +1,6 @@
 package ru.gb.android_lesson_10.ui;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,12 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Calendar;
+
 import ru.gb.android_lesson_10.R;
+import ru.gb.android_lesson_10.publisher.Observer;
 import ru.gb.android_lesson_10.repository.LocalRepositoryImpl;
 import ru.gb.android_lesson_10.repository.Note;
 import ru.gb.android_lesson_10.repository.NoteSource;
 
-public class NoteListFragment extends Fragment implements OnItemNoteClickListener {
+public class NoteListFragment extends Fragment implements OnItemNoteClickListener, Observer {
 
     NoteListAdapter noteListAdapter;
     NoteSource noteData;
@@ -58,11 +60,11 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
 
         switch (item.getItemId()) {
             case (R.id.action_add): {
-                noteData.addNewNote(new Note("Note " + (noteData.size() + 1), "Note body " + (noteData.size() + 1), false));
+                noteData.addNewNote(new Note("Note " + (noteData.size() + 1), "Note body " + (noteData.size() + 1), Calendar.getInstance().getTime(), false));
                 noteListAdapter.notifyItemInserted(noteData.size());
                 return true;
             }
-            case (R.id.action_clear):{
+            case (R.id.action_clear): {
                 noteData.clearAllNotes();
                 noteListAdapter.notifyDataSetChanged();
                 return true;
@@ -74,19 +76,23 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        requireActivity().getMenuInflater().inflate(R.menu.note_list_context_menu,menu);
+        requireActivity().getMenuInflater().inflate(R.menu.note_list_context_menu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int menuPosition = noteListAdapter.getMenuPosition();
-        switch (item.getItemId()){
-            case (R.id.action_edit_list_item):{
-                noteData.updateNote(menuPosition,new Note("Note tittle update " + (noteData.size() + 1), "Note body update" + (noteData.size() + 1), false));
+        switch (item.getItemId()) {
+            case (R.id.action_edit_list_item): {
+                noteData.updateNote(menuPosition,
+                        new Note("Note tittle update " + (noteData.size() + 1),
+                                "Note body update" + (noteData.size() + 1),
+                                Calendar.getInstance().getTime(),
+                                false));
                 noteListAdapter.notifyItemChanged(menuPosition);
                 return false;
             }
-            case (R.id.action_delete_list_item):{
+            case (R.id.action_delete_list_item): {
                 noteData.deleteNote(menuPosition);
                 noteListAdapter.notifyItemRemoved(menuPosition);
                 return false;
@@ -95,14 +101,14 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
         return super.onContextItemSelected(item);
     }
 
-    void initAdapter(){
+    void initAdapter() {
         noteListAdapter = new NoteListAdapter(this);
         noteData = new LocalRepositoryImpl(requireContext().getResources()).init();
         noteListAdapter.setData(noteData);
         noteListAdapter.setOnItemNoteClickListener(this);
     }
 
-    void initRecycler(View view){
+    void initRecycler(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.noteRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setHasFixedSize(true);
@@ -126,4 +132,8 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
     }
 
 
+    @Override
+    public void receiveMessage(Note note) {
+
+    }
 }
