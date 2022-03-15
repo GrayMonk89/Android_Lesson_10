@@ -19,13 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Calendar;
 
+import ru.gb.android_lesson_10.MainActivity;
 import ru.gb.android_lesson_10.R;
 import ru.gb.android_lesson_10.publisher.Observer;
 import ru.gb.android_lesson_10.repository.LocalRepositoryImpl;
 import ru.gb.android_lesson_10.repository.Note;
 import ru.gb.android_lesson_10.repository.NoteSource;
+import ru.gb.android_lesson_10.ui.edit.NoteEditorFragment;
 
-public class NoteListFragment extends Fragment implements OnItemNoteClickListener, Observer {
+public class NoteListFragment extends Fragment implements OnItemNoteClickListener {
 
     NoteListAdapter noteListAdapter;
     NoteSource noteData;
@@ -84,12 +86,29 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
         int menuPosition = noteListAdapter.getMenuPosition();
         switch (item.getItemId()) {
             case (R.id.action_edit_list_item): {
-                noteData.updateNote(menuPosition,
+                /*noteData.updateNote(menuPosition,
                         new Note("Note tittle update " + (noteData.size() + 1),
                                 "Note body update" + (noteData.size() + 1),
                                 Calendar.getInstance().getTime(),
                                 false));
-                noteListAdapter.notifyItemChanged(menuPosition);
+                noteListAdapter.notifyItemChanged(menuPosition);*/
+                Observer observer = new Observer() {
+                    @Override
+                    public void receiveMessage(Note note) {
+                        ((MainActivity) requireActivity()).getPublisher().unsubscribe(this);
+                        noteData.updateNote(menuPosition, note);
+                        noteListAdapter.notifyItemChanged(menuPosition);
+                    }
+                };
+                ((MainActivity) requireActivity()).getPublisher().subscribe(observer);
+                ((MainActivity) requireActivity())
+                        .getNavigation()
+                        .addFragment(NoteEditorFragment.newInstance(noteData.getNoteData(menuPosition)),true);
+//                        .getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .add(R.id.notesContainer, NoteEditorFragment.newInstance(noteData.getNoteData(menuPosition)))
+//                        .addToBackStack("")
+//                        .commit();
                 return false;
             }
             case (R.id.action_delete_list_item): {
@@ -129,11 +148,5 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
     public void onNoteClick(int position) {
         String[] data = getData();
         Toast.makeText(requireContext(), "Жамкнули на " + data[position], Toast.LENGTH_SHORT).show();
-    }
-
-
-    @Override
-    public void receiveMessage(Note note) {
-
     }
 }

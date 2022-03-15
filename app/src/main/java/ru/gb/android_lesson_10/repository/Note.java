@@ -6,10 +6,19 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class Note implements Parcelable {
+
     private String tittleNote;
     private String bodyNote;
     private boolean isDone;
     private Date dateOfCreation;
+
+    public void setTittleNote(String tittleNote) {
+        this.tittleNote = tittleNote;
+    }
+
+    public void setBodyNote(String bodyNote) {
+        this.bodyNote = bodyNote;
+    }
 
 
     public Date getDateOfCreation() {

@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.util.Locale;
+
 import ru.gb.android_lesson_10.R;
 import ru.gb.android_lesson_10.repository.Note;
 import ru.gb.android_lesson_10.repository.NoteSource;
@@ -87,20 +90,13 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
 
             fragment.registerForContextMenu(itemView);
 
-//            textView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if(onItemNoteClickListener != null){
-//                        onItemNoteClickListener.onNoteClick(getLayoutPosition());
-//                    }
-//                }
-//            });
         }
 
-        public void bindContentWithLayout(Note content) {
-            textViewTittle.setText(content.getTittleNote());
-            textViewBody.setText(content.getBodyNote());
-            textViewData.setText(content.getDateOfCreation().toString());
+        public void bindContentWithLayout(Note note) {
+            textViewTittle.setText(note.getTittleNote());
+            textViewBody.setText(note.getBodyNote());
+            textViewData.setText(DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(note.getDateOfCreation()));
+            toggleButton.setChecked(note.isDone());
         }
 
     }
