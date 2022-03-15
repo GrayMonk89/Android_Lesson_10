@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import ru.gb.android_lesson_10.MainActivity;
 import ru.gb.android_lesson_10.R;
@@ -23,6 +22,9 @@ public class NoteEditorFragment extends Fragment {
 
     private Note note;
     Calendar calendar;
+    EditText inputTittle;
+    EditText inputBody;
+    DatePicker datePicker;
     //private DatePicker datePicker;
 
     public static NoteEditorFragment newInstance(Note note) {
@@ -34,55 +36,81 @@ public class NoteEditorFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            note = getArguments().getParcelable("SameNote");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_note_editor, container, false);
+        View view = inflater.inflate(R.layout.fragment_note_editor, container, false);
+        initView(view);
+        if (note != null) {
+            extractNote();
+        }
+        return view;
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (getArguments() != null) {
-            note = getArguments().getParcelable("SameNote");
-            ((EditText) view.findViewById(R.id.inputTittle)).setText(note.getTittleNote());
-            ((EditText) view.findViewById(R.id.inputBody)).setText(note.getBodyNote());
-            calendar = Calendar.getInstance();
-            calendar.setTime(note.getDateOfCreation());
+        setListeners(view);
+    }
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                ((DatePicker) view.findViewById(R.id.inputDate)).setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
-                    @Override
-                    public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, month);
-                        calendar.set(Calendar.DAY_OF_MONTH, day);
-                    }
-                });
-            }
+    private void initView(View view) {
+        datePicker = ((DatePicker) view.findViewById(R.id.inputDate));
+        inputTittle = ((EditText) view.findViewById(R.id.inputTittle));
+        inputBody = ((EditText) view.findViewById(R.id.inputBody));
+    }
 
-            view.findViewById(R.id.buttonSaveChanges).setOnClickListener(new View.OnClickListener() {
+    private void setListeners(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                 @Override
-                public void onClick(View v) {
-
-                    note.setTittleNote(((EditText) view.findViewById(R.id.inputTittle)).getText().toString());
-                    note.setBodyNote(((EditText) view.findViewById(R.id.inputTittle)).getText().toString());
-
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
-                        DatePicker datePicker = ((DatePicker) view.findViewById(R.id.inputDate));
-                        calendar.set(Calendar.YEAR, datePicker.getYear());
-                        calendar.set(Calendar.MONTH, datePicker.getMonth());
-                        calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
-                    }
-                    note.setDateOfCreation(calendar.getTime());
-                    ((MainActivity) requireActivity()).getPublisher().sendMessage(note);
-                    requireActivity().getSupportFragmentManager().popBackStack();
-                    view.clearFocus();
+                public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
+                    setCalendar(year, month, day);
                 }
             });
         }
 
+        view.findViewById(R.id.buttonSaveChanges).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    setCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                }
+                saveNote();
+                sendMessage();
+                view.clearFocus();
+            }
+        });
     }
 
-    private void initDatePicker(Date date){
+    private void setCalendar(int year, int month, int day) {
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+    }
 
+    private void saveNote() {
+        note.setTittleNote(inputTittle.getText().toString());
+        note.setBodyNote(inputBody.getText().toString());
+        note.setDateOfCreation(calendar.getTime());
+    }
+
+    private void extractNote() {
+        calendar = Calendar.getInstance();
+
+        inputTittle.setText(note.getTittleNote());
+        inputBody.setText(note.getBodyNote());
+        calendar.setTime(note.getDateOfCreation());
+    }
+
+    private void sendMessage() {
+        ((MainActivity) requireActivity()).getPublisher().sendMessage(note);
+        requireActivity().getSupportFragmentManager().popBackStack();
     }
 }

@@ -86,12 +86,7 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
         int menuPosition = noteListAdapter.getMenuPosition();
         switch (item.getItemId()) {
             case (R.id.action_edit_list_item): {
-                /*noteData.updateNote(menuPosition,
-                        new Note("Note tittle update " + (noteData.size() + 1),
-                                "Note body update" + (noteData.size() + 1),
-                                Calendar.getInstance().getTime(),
-                                false));
-                noteListAdapter.notifyItemChanged(menuPosition);*/
+
                 Observer observer = new Observer() {
                     @Override
                     public void receiveMessage(Note note) {
@@ -103,12 +98,7 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
                 ((MainActivity) requireActivity()).getPublisher().subscribe(observer);
                 ((MainActivity) requireActivity())
                         .getNavigation()
-                        .addFragment(NoteEditorFragment.newInstance(noteData.getNoteData(menuPosition)),true);
-//                        .getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .add(R.id.notesContainer, NoteEditorFragment.newInstance(noteData.getNoteData(menuPosition)))
-//                        .addToBackStack("")
-//                        .commit();
+                        .addFragment(NoteEditorFragment.newInstance(noteData.getNoteData(menuPosition)), true);
                 return false;
             }
             case (R.id.action_delete_list_item): {

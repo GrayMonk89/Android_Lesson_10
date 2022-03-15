@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
-import java.util.Locale;
 
 import ru.gb.android_lesson_10.R;
 import ru.gb.android_lesson_10.repository.Note;
@@ -95,7 +94,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         public void bindContentWithLayout(Note note) {
             textViewTittle.setText(note.getTittleNote());
             textViewBody.setText(note.getBodyNote());
-            textViewData.setText(DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(note.getDateOfCreation()));
+            textViewData.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(note.getDateOfCreation()));
             toggleButton.setChecked(note.isDone());
         }
 

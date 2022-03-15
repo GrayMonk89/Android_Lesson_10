@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         navigation = new Navigation(getSupportFragmentManager());
 
         if (savedInstanceState == null) {
-            //getSupportFragmentManager().beginTransaction().replace(R.id.notesContainer, NoteListFragment.newInstance()).commit();
             navigation.replaceFragment(NoteListFragment.newInstance(), false);
         }
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
@@ -51,13 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case (R.id.action_new_note): {
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.notesContainer, NewNoteFragment.newInstance()).addToBackStack("").commit();
-//                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.the_note, NewNoteFragment.newInstance()).addToBackStack("").commit();
-//                } else {
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.list_of_note, NewNoteFragment.newInstance()).addToBackStack("").commit();
-//                };
                 return true;
             }
 
