@@ -1,4 +1,4 @@
-package ru.gb.android_lesson_10.ui;
+package ru.gb.android_lesson_10.ui.main_view;
 
 import android.view.LayoutInflater;
 import android.view.View;

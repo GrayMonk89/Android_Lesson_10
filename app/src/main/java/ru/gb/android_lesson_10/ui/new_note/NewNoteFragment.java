@@ -1,4 +1,4 @@
-package ru.gb.android_lesson_10.ui;
+package ru.gb.android_lesson_10.ui.new_note;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import ru.gb.android_lesson_10.R;
 import ru.gb.android_lesson_10.repository.LocalRepositoryImpl;
 import ru.gb.android_lesson_10.repository.Note;
 import ru.gb.android_lesson_10.repository.NoteSource;
+import ru.gb.android_lesson_10.ui.main_view.NoteListAdapter;
 
 public class NewNoteFragment extends Fragment {
 
@@ -50,7 +51,7 @@ public class NewNoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        noteListAdapter = new NoteListAdapter(this);
+        noteListAdapter = new NoteListAdapter((NoteSource)this);
         noteData = new LocalRepositoryImpl(requireContext().getResources()).init();
         return inflater.inflate(R.layout.fragment_new_note, container, false);
     }
@@ -72,9 +73,9 @@ public class NewNoteFragment extends Fragment {
     }
 
     void initView(View view) {
-        EditText inputTittle = view.findViewById(R.id.inputNewTittle);
-        EditText inputBody = view.findViewById(R.id.inputNewBody);
-        DatePicker datePicker = view.findViewById(R.id.inputNewDate);
+        inputTittle = view.findViewById(R.id.inputNewTittle);
+        inputBody = view.findViewById(R.id.inputNewBody);
+        datePicker = view.findViewById(R.id.inputNewDate);
         if (inputTittle.getText() == null || inputBody.getText() == null) {
             inputTittle.setText(" ");
             inputBody.setText(" ");

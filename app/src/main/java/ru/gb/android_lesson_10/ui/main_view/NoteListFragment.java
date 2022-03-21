@@ -1,5 +1,7 @@
-package ru.gb.android_lesson_10.ui;
+package ru.gb.android_lesson_10.ui.main_view;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +34,11 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
 
     NoteListAdapter noteListAdapter;
     NoteSource noteData;
+    final static int SOURCE_ARRAY = 1;
+    final static int SOURCE_SP = 2;
+    final static int SOURCE_GF = 3;
+    final static String SELECTION_KEY_RG = "Select RadioButton";
+    final static String SELECTION_KEY_RG_SOURCE = "Selected RadioButton";
 
     public static NoteListFragment newInstance() {
         NoteListFragment fragment = new NoteListFragment();
@@ -49,6 +57,55 @@ public class NoteListFragment extends Fragment implements OnItemNoteClickListene
         initAdapter();
         initRecycler(view);
         setHasOptionsMenu(true);
+        initRadioGroup(view);
+    }
+
+    private void initRadioGroup(View view){
+        view.findViewById(R.id.sourceArrays).setOnClickListener(radioGroupListener);
+        view.findViewById(R.id.sourceSP).setOnClickListener(radioGroupListener);
+        view.findViewById(R.id.sourceGF).setOnClickListener(radioGroupListener);
+
+        switch (getCurrentSource()) {
+            case SOURCE_ARRAY:
+                ((RadioButton) view.findViewById(R.id.sourceArrays)).setChecked(true);
+                break;
+            case SOURCE_SP:
+                ((RadioButton) view.findViewById(R.id.sourceSP)).setChecked(true);
+                break;
+            case SOURCE_GF:
+                ((RadioButton) view.findViewById(R.id.sourceGF)).setChecked(true);
+                break;
+        }
+    }
+
+    View.OnClickListener radioGroupListener = new View.OnClickListener(){
+
+        @Override
+        public void onClick(View view){
+            switch(view.getId()){
+                case(R.id.sourceArrays):{
+                    setCurrentSource(SOURCE_ARRAY);
+                 break;
+                }case(R.id.sourceSP):{
+                    setCurrentSource(SOURCE_SP);
+                 break;
+                }case(R.id.sourceGF):{
+                    setCurrentSource(SOURCE_GF);
+                 break;
+                }
+            }
+        }
+    };
+
+    void setCurrentSource(int currentSource){
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SELECTION_KEY_RG, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SELECTION_KEY_RG_SOURCE, currentSource);
+        editor.apply();
+    }
+    int getCurrentSource(){
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SELECTION_KEY_RG,Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(SELECTION_KEY_RG_SOURCE, SOURCE_ARRAY);
     }
 
     @Override

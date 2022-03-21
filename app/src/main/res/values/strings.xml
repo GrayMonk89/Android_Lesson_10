@@ -15,4 +15,7 @@
     <string name="go_back">Go back</string>
     <string name="body">Body:</string>
     <string name="save_changes">Save changes</string>
+    <string name="from_gf">From GF</string>
+    <string name="from_sp">From SP</string>
+    <string name="from_array">From array</string>
 </resources>

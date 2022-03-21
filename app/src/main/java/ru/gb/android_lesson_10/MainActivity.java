@@ -10,8 +10,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import ru.gb.android_lesson_10.publisher.Publisher;
 import ru.gb.android_lesson_10.ui.Navigation;
-import ru.gb.android_lesson_10.ui.NewNoteFragment;
-import ru.gb.android_lesson_10.ui.NoteListFragment;
+import ru.gb.android_lesson_10.ui.new_note.NewNoteFragment;
+import ru.gb.android_lesson_10.ui.main_view.NoteListFragment;
 
 public class MainActivity extends AppCompatActivity {
 

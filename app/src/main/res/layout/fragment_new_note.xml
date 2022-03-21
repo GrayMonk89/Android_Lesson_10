@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/teal_700"
     android:orientation="vertical"
-    tools:context="ui.NewNoteFragment">
+    tools:context=".ui.new_note.NewNoteFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
